@@ -1,0 +1,103 @@
+#!/bin/bash
+# 
+# Name: bashrc man - (path)
+# Description: Tool set commands for for GNU $PATH Varriables
+# Copyright (C) 2023 - Beba Godfried.
+# This program may be freely redistributed under the terms of the GNU GPL
+#
+
+# ANSI
+Y='\033[0;33m'  # color: brown
+R='\033[0;31m'  # color: red
+G='\033[0;32m'  # color: green
+
+B='\033[1m'     # font: 600
+RESET='\033[0m' # automatics
+
+# functions
+function timeout() {
+  timer=$1
+
+  echo -e "${G}Completed!${RESET} - Type ${B}\`source ~/.bashrc\`${RESET} or ${B}\`exit\`${RESET} to load the new \`.bashrc\`"
+  if [[ $timer != '' && $timer != 0 ]];then
+    read -t $timer esc
+    
+  else
+    read esc
+  fi
+
+  echo ''
+}
+
+# initialization
+clear
+echo -e "${Y}${B}[ bashrc 1.0 by @bebagodfried - GitHub ]${RESET}${RESET}"
+
+# Get the command-line arguments
+append_2shell=$2
+append_2paths=$2
+
+# Get the .bashrc location
+bashrc=~/.bashrc
+
+# `bashrc` command
+if ! command -v bashrc >> /dev/null;then
+  ./bashrc
+fi
+
+# Shell reload
+source $bashrc
+
+# Shell
+key=$1
+if [[ $key == "--export" || $key == "-e" ]];then
+  # Append a directory to `PATH`
+  echo "export PATH=$PATH:$append_2paths" >> $bashrc
+  timeout 3
+
+  exit 0
+
+elif [[ $key == "--show" || $key == "-s" ]];then
+  clear
+  # Display `bashrc`
+  echo -e "${B}PATH =${RESET} $PATH "
+
+  read -t 3 esc
+  echo ''
+  exit 0
+
+elif [[ $key == "--undo" || $key == "-u" ]];then
+  # Reload last backup
+  bashrc -u
+ 
+elif [[ $key == "--help" || $key == "-h" ]];then
+  # Help
+  clear
+  echo -e "${Y}${B}[ bashrc 1.0 by @bebagodfried - GitHub ]${RESET}${RESET}"
+  echo -e "$ ${B}Usage:${RESET} path [OPTION] [ARG]"
+  echo "$ Manage your GNU Bash shell script whenever it is run/started interactively."
+  echo ""
+  echo -e "  -e, ${B}--export${RESET}        add environment variables to \`\$PATH\`"
+  echo -e "  -s, ${B}--show  ${RESET}        view currently configured variables in \`\$PATH\`"
+  echo -e "  -u, ${B}--undo  ${RESET}        restore the last shell backup"
+  echo -e "  -h, ${B}--help  ${RESET}        display this help and exit"
+
+  read esc
+  
+elif [[ $key == "" ]];then
+  echo -e "${B}PATH =${RESET} $PATH "
+
+  read -t 3 esc
+  echo ''
+  exit 0
+else
+  # Help
+  clear
+  echo -e "${Y}${B}[ bashrc 1.0 by @bebagodfried - GitHub ]${RESET}${RESET}"
+  echo -e "${R}${B}error:${RESET}${RESET} unrecognized option '$key'"
+  echo -e "Try ${B}'bashrc --help'${RESET} for more information."
+
+  read -t 3 esc
+  echo ''
+  exit 0
+fi
