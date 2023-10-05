@@ -1,7 +1,6 @@
-# `BASHRC - GNU/Linux`
-#### Cross-platform GNU Bash configuration for the Bash/Shell environment.
+### Cross-platform GNU Bash configuration for the Bash/Shell environment.
   ```
-  💡.bashrc is a script that bash shell executes whenever it starts a new interactive session.
+  💡 .bashrc is a script that bash shell executes whenever it starts a new interactive session.
   ```
 ---
 
