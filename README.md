@@ -1,5 +1,5 @@
 # `BASHRC - GNU/Linux`
-#### Simple toolset for GNU Bash Shell execution
+#### Cross-platform GNU Bash configuration for the Bash/Shell environment.
   ```
   💡.bashrc is a script that bash shell executes whenever it starts a new interactive session.
   ```
